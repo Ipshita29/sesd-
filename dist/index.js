@@ -105,6 +105,88 @@ class MyCLI {
                     console.log(`Division is: ${Number(number1) / Number(number2)}`);
                 }
             });
+            this.program
+            .command("square <num>")
+            .description("Square of a number")
+            .action((num) => {
+                console.log(`Square is: ${Number(num) * Number(num)}`);
+            });
+
+        this.program
+            .command("reverse <text>")
+            .description("Reverse a string")
+            .action((text) => {
+                console.log(text.split("").reverse().join(""));
+            });
+
+        this.program
+            .command("time")
+            .description("Show current time")
+            .action(() => {
+                console.log(new Date().toLocaleTimeString());
+            });
+
+        this.program
+            .command("date")
+            .description("Show today's date")
+            .action(() => {
+                console.log(new Date().toLocaleDateString());
+            });
+
+        this.program
+            .command("random")
+            .description("Generate random number")
+            .action(() => {
+                console.log(Math.floor(Math.random() * 100));
+            });
+
+
+        // Quote API
+        this.program
+            .command("quote")
+            .description("Get random quote")
+            .action(async () => {
+                try {
+                const res = await axios.get("https://zenquotes.io/api/random");
+
+                console.log(chalk.blue(`"${res.data[0].q}"`));
+                console.log(`— ${res.data[0].a}`);
+                } catch (error) {
+                console.log("Error fetching quote. Check your internet.");
+                }
+            });
+
+        // GitHub API
+        this.program
+            .command("github <username>")
+            .description("Get GitHub user info")
+            .action(async (username) => {
+                try {
+                    const res = await axios.get(`https://api.github.com/users/${username}`);
+
+                    console.log(chalk.yellow(`User: ${res.data.login}`));
+                    console.log(`Repos: ${res.data.public_repos}`);
+                    console.log(`Followers: ${res.data.followers}`);
+                } catch (error) {
+                    console.log("User not found");
+                }
+            });
+
+        // Joke API
+        this.program
+            .command("joke")
+            .description("Get a random joke")
+            .action(async () => {
+                try {
+                const res = await axios.get("https://official-joke-api.appspot.com/random_joke");
+
+                console.log(chalk.yellow(res.data.setup));
+                console.log(chalk.green(res.data.punchline));
+
+                } catch (error) {
+                console.log("Error fetching joke");
+                }
+            });
     }
 
     run() {
