@@ -1,4 +1,3 @@
-# sesd
 # MyCLI – Custom Command Line Tool
 
 A simple and powerful **Command Line Interface (CLI) tool** built using **Node.js, TypeScript concepts, and the Commander library**.
